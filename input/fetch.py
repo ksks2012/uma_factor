@@ -1,5 +1,6 @@
 import re
 import sys
+from typing import Mapping
 from unittest.util import strclass
 
 import cv2
@@ -29,14 +30,14 @@ def fix_text(test_str):
         print(test_str[i])
 
 class HorseFetcher():
-    def __init__(self) -> None:
+    def __init__(self, use_api = False, screen_shot = False) -> None:
         # processing args
         self.use_api = 0
-        self.screen_shoot = 0
+        self.screen_shot = 0
         print(sys.argv)
         try:
-            self.use_api = int(sys.argv[1])
-            self.screen_shoot = int(sys.argv[2])
+            self.use_api = use_api
+            self.screen_shot = screen_shot
         except:
             print("No input arg")
 
@@ -49,23 +50,26 @@ class HorseFetcher():
         self.exist_factor_idx = []
 
         self.stars = {}
+
+        self._horse_info = {}
         
         self.white_factor_count = 0
 
         self.sqlite_instance = SqliteInstance()
         self.sqlite_instance.connect("var/data.db3")
 
+        self.horse_name_dict, self.blue_list, self.red_list, self.green_list, self.factor_list = read_static_data()
+
+    # img to text
     def fetch_screen(self):
-        if self.screen_shoot == 1:
-            # screen shoot
+        if self.screen_shot == 1:
+            # screen shot
             image = ImageGrab.grab(bbox=(1350, 100, 1920, 800))
 
             # save image
             image.save(SOURCE_FILE_NAME)
 
         image = cv2.imread('./var/fullscreen.png')
-
-        self.horse_name_dict, self.blue_list, self.red_list, self.green_list, self.factor_list = read_static_data()
 
         # use google API to trans image to text
         if self.use_api == 1:
@@ -135,8 +139,23 @@ class HorseFetcher():
                 except:
                     self.factor[idx] = 1
                     print("error when white factor use star_tracker()")
+
+        # gen _horse_info
+        self._gen_horse_info()
                 
         print(self.stars)
+
+    def _gen_horse_info(self):
+        self._horse_info["horse_name"] = self.horse_name
+        self._horse_info["blue"] = {self.blue: self.stars[self.blue]}
+        self._horse_info["red"] = {self.red: self.stars[self.red]}
+        if len(self.green) != 0: 
+            self._horse_info["green"] = {self.green: self.stars[self.green]}
+        exist_white_factor = {}
+        for idx in self.exist_factor_idx:
+            exist_white_factor[self.factor_list[idx]] = self.stars[self.factor_list[idx]]
+
+        self._horse_info["white"] = exist_white_factor
 
     def trans_csv(self, path = 'output.txt'):
         ## trans to csv row
@@ -234,8 +253,12 @@ class HorseFetcher():
             return True
         return False
 
+    @property
+    def horse_info(self) -> Mapping:
+        return self._horse_info
+
 if __name__ == '__main__':
-    horse_fetcher = HorseFetcher()
+    horse_fetcher = HorseFetcher(int(sys.argv[1]), int(sys.argv[2]))
     horse_fetcher.fetch_screen()
     horse_fetcher.trans_csv()
     key_in = sys.stdin.readline()
@@ -243,3 +266,4 @@ if __name__ == '__main__':
         # search_cmd = horse_fetcher.trans_search_cmd()
         if horse_fetcher.check_horse_exist() is False:
             horse_fetcher.trans_sql_cmd()
+            

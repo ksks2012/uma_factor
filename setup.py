@@ -5,7 +5,7 @@ from setuptools import setup  # pylint: disable=import-error
 from setuptools import find_packages
 
 setup(name="umafactor",
-		version="0.0.1",
+		version="0.1.0",
 		description="An simple program for record and calculate UMA factors",
 		packages=find_packages(),
 		install_requires=[
