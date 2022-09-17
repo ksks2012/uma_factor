@@ -17,7 +17,7 @@ rt-sandbox/**
 dist/**
 
 
-*.json
+.credentials/**
 *.png
 *.log
 *.txt
