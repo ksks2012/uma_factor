@@ -15,6 +15,10 @@ bucket_name = "uma_factor_storage"
 
 COUNT = 0
 
+# set google application credentials by using file
+import os
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./.credentials/google_cred.json"
+
 def detect_text(path):
     """Detects text in the file."""
     client = vision.ImageAnnotatorClient()
@@ -34,13 +38,6 @@ def detect_text(path):
     text_allocate_list = []
 
     for text in response.text_annotations:
-        # print(text.description)
-        # # print('{}'.format(text.description))
-        # vertices_text = ['({},{})'.format(vertex.x, vertex.y)
-        #             for vertex in text.bounding_poly.vertices]
-
-        # print('bounds: {}\n'.format(','.join(vertices_text)))
-
         text_allocate_list.append([(vertex.x, vertex.y) for vertex in text.bounding_poly.vertices])
         
 
@@ -82,12 +79,6 @@ def cut_text(img, text_allocate_list: List):
         img = cv2.rectangle(img, (text_allocate[0][0] + 60, text_allocate[0][1]), (text_allocate[0][0] + 130, text_allocate[0][1] + 30), color2, 3)
 
     cv2.imwrite('text_track.png', img)
-
-# def offset_text_cut_block(text_allocate_list):
-#      for i in range(len(text_allocate_list)):
-#         text_allocate_list[i][0][0] = text_allocate_list[i][0][0] + 60
-#         text_allocate_list[i][1][0] = text_allocate_list[i][1][0] + 130
-#         text_allocate_list[i][1][1] = text_allocate_list[i][1][1] + 30
 
 # RGB of star
 lower = np.array([50,200,240])

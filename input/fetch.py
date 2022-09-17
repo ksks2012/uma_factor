@@ -13,7 +13,6 @@ from util.common import read_static_data
 SOURCE_FILE_NAME = "./var/fullscreen.png"
 
 TEST_STR = ['「持有因子', '速度', '寶塚紀念', '晴天○', '放學的樂趣', '因子一覽', '關閉', '[火紅鬥爭]', '黃金船', '中距離', '希望S', '深呼吸']
-# TEST_STR = ['持有因子', '持久力', '主要距離○', '逐夢之星', '[特別夢想家]', '特別週', '中距離', '彎道回復', 'rhina', 'VERITE', 'APK', '0 >>> a']
 
 # fix error by google API response
 def fix_text(test_str):
@@ -79,6 +78,8 @@ class HorseFetcher():
             print(text_allocate_list)
         else:
             test_str = TEST_STR
+            print("No google api support")
+            return
 
         # fix text
         fix_text(test_str)
@@ -266,4 +267,3 @@ if __name__ == '__main__':
         # search_cmd = horse_fetcher.trans_search_cmd()
         if horse_fetcher.check_horse_exist() is False:
             horse_fetcher.trans_sql_cmd()
-            

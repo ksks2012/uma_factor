@@ -11,14 +11,19 @@
 https://cloud.google.com/vision/docs/ocr
 
 
-```
-$env:GOOGLE_APPLICATION_CREDENTIALS="{key file}"
-set GOOGLE_APPLICATION_CREDENTIALS=KEY_PATH
-```
+- Put goolge API credential file in .credentials
 
 # TODO
 
-- [ ] UI
+## view models
+
+- [x] Screen shot
+- [x] feature to text
+- [x] csv storage / translate
+- [ ] sqlite control
+- [ ] auto calculator
+
+## UI
 - [ ] csv storage / translate
 - [ ] auto calculator
 - [ ] language midware
