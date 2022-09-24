@@ -20,7 +20,7 @@ setup(name="umafactor",
 				"Development Status :: 3 - Alpha",
 				"Intended Audience :: Developers",
 				"Operating System :: POSIX",
-				"Programming Language :: Python :: 3.8",
+				"Programming Language :: Python :: 3.10.6",
 		],
 		)
 

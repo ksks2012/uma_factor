@@ -16,9 +16,11 @@ kivy.resources.resource_add_path(os.path.abspath('./font/msjh.ttc'))
 LabelBase.register('zh_font', './font/msjh.ttc')
 
 class HorseInfoLayout(GridLayout):
-    def __init__(self, horse_info, **kwargs):
-        super(HorseInfoLayout, self).__init__(**kwargs)
+    def __init__(self, horse_info={}, **kwargs):
         self.horse_info = horse_info
+        # count = len(self.horse_info) - 1 + len(self.horse_info.get("white", {}))
+        super(HorseInfoLayout, self).__init__(cols=2, rows=20, **kwargs)
+        self.build()
 
     def _info_to_lable(self, info: Mapping) -> List:
         if len(info) == 0:
@@ -31,22 +33,27 @@ class HorseInfoLayout(GridLayout):
         return info_keys[0]
 
     def build(self):
-        count = len(self.horse_info) - 1 + len(self.horse_info.get("white", {}))
-        horse_info_grid = GridLayout(cols=2, rows=count//2+1)
-
         # TODO: background
         # TODO: stars
-        horse_info_grid.add_widget(Label(text=self.horse_info.get("horse_name", "")))
-        horse_info_grid.add_widget(Label(text=self._info_to_lable(self.horse_info.get("blue", {}))))
-        horse_info_grid.add_widget(Label(text=self._info_to_lable(self.horse_info.get("red", {}))))
+        self.add_widget(Label(text=self.horse_info.get("horse_name", "")))
+        self.add_widget(Label(text=self._info_to_lable(self.horse_info.get("blue", {}))))
+        self.add_widget(Label(text=self._info_to_lable(self.horse_info.get("red", {}))))
         if self.horse_info.get("green") is not None:
-            horse_info_grid.add_widget(Label(self._info_to_lable(text=self.horse_info.get("green", {}))))
+            self.add_widget(Label(self._info_to_lable(text=self.horse_info.get("green", {}))))
 
         # TODO: check if horse_info had missing value
         for key, value in self.horse_info.get("white", {}).items():
             l = Label(text=str(key))
-            horse_info_grid.add_widget(l)
-        return horse_info_grid
+            self.add_widget(l)
+        print(self.horse_info)
+        return self
+    
+    # callback function for update self widget
+    def update_horse_info(self, info: Mapping, delta_time: float):
+        if info != self.horse_info:
+            self.horse_info = info
+            self.clear_widgets()
+            self.build()
 
 class HorseInfoApp(App):
     def __init__(self, horse_info={}, **kwargs):
@@ -54,7 +61,7 @@ class HorseInfoApp(App):
         self.horse_info = horse_info
 
     def build(self):
-        return HorseInfoLayout(horse_info=self.horse_info).build()
+        return HorseInfoLayout(horse_info=self.horse_info)
 
     @classmethod
     def show_horse_info(horse_info: Mapping):
