@@ -11,6 +11,7 @@ from kivy.core.text import LabelBase
 import kivy
 
 import os
+from view.label_gen import LabelGen
 
 kivy.resources.resource_add_path(os.path.abspath('./font/msjh.ttc'))
 LabelBase.register('zh_font', './font/msjh.ttc')
@@ -36,15 +37,15 @@ class HorseInfoLayout(GridLayout):
         # TODO: background
         # TODO: stars
         self.add_widget(Label(text=self.horse_info.get("horse_name", "")))
-        self.add_widget(Label(text=self._info_to_lable(self.horse_info.get("blue", {}))))
-        self.add_widget(Label(text=self._info_to_lable(self.horse_info.get("red", {}))))
+        self.add_widget(LabelGen(text=self._info_to_lable(self.horse_info.get("blue", {})), backgroud_color='blue'))
+        self.add_widget(LabelGen(text=self._info_to_lable(self.horse_info.get("red", {})), backgroud_color='red'))
         if self.horse_info.get("green") is not None:
-            self.add_widget(Label(self._info_to_lable(text=self.horse_info.get("green", {}))))
+            self.add_widget(LabelGen(text=self._info_to_lable(self.horse_info.get("green", {})), backgroud_color='green'))
 
         # TODO: check if horse_info had missing value
         for key, value in self.horse_info.get("white", {}).items():
-            l = Label(text=str(key))
-            self.add_widget(l)
+            label = LabelGen(text=str(key), backgroud_color='balck')
+            self.add_widget(label)
         print(self.horse_info)
         return self
     
