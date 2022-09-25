@@ -19,6 +19,10 @@ from test_code.horse_info import HorseInfoLayout
 
 SOURCE_FILE_NAME = "./var/fullscreen.png"
 
+ANALYSIS_BT_TEXT = 'Analysis'
+CONTEXT_BT_TEXT = 'Close me!'
+SAVE_BT_TEXT = 'Save'
+
 class ScreenShotApp(App):
     def build(self):
         self.take_screen_shot = 0
@@ -37,14 +41,18 @@ class ScreenShotApp(App):
         
         box = BoxLayout(spacing=10)
 
-        analysis_bt = Button(text='Analysis', size_hint=(1, .15))
+        analysis_bt = Button(text=ANALYSIS_BT_TEXT, size_hint=(1, .15))
         analysis_bt.bind(on_press=self.press_analysis_bt)
 
-        content_bt = Button(text='Close me!', size_hint=(1, .15))
+        content_bt = Button(text=CONTEXT_BT_TEXT, size_hint=(1, .15))
         # FIXME: when App is popup window
         # popup = Popup(title='Test popup', content_bt=box, size_hint=(None, None), size=(620, 1000), auto_dismiss=False)
         # content_bt.bind(on_press=popup.dismiss)        
         # popup.open()
+
+        self.save_bt = Button(text=SAVE_BT_TEXT, size_hint=(1, .15))
+        self.save_bt.bind(on_press=self.press_save_bt)
+        self.save_bt.disabled = True
 
         self.build_figure(box)
         self.horse_info_layout = HorseInfoLayout()
@@ -54,15 +62,19 @@ class ScreenShotApp(App):
         self.root.add_widget(self.horse_info_layout)
         self.root.add_widget(analysis_bt)
         self.root.add_widget(content_bt)
+        self.root.add_widget(self.save_bt)
 
         return self.root
 
     def press_analysis_bt(self, arg):
         # TODO: charactor label 
-        horse_fetcher = HorseFetcher(use_api=self.use_google_api)
-        horse_fetcher.fetch_screen()
-        horse_info = horse_fetcher.horse_info
-        Clock.schedule_once(partial(self.horse_info_layout.update_horse_info, horse_info))
+        self.horse_fetcher = HorseFetcher(use_api=self.use_google_api)
+        self.horse_fetcher.fetch_screen()
+        Clock.schedule_once(partial(self.horse_info_layout.update_horse_info, self.horse_fetcher.horse_info))
+        self.save_bt.disabled = False
+
+    def press_save_bt(self, arg):
+        self.horse_fetcher.save_horse_info_in_db()
 
     def build_figure(self, box: GridLayout):
         try:

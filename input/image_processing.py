@@ -89,7 +89,6 @@ def star_tracker(img, count = 0):
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
     output = cv2.dilate(output, kernel)
     output = cv2.erode(output, kernel)
-    cv2.imwrite(count + '.png', output)
     contours, hierarchy = cv2.findContours(output, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     return len(contours)

@@ -15,6 +15,7 @@ SOURCE_FILE_NAME = "./var/fullscreen.png"
 TEST_STR = ['「持有因子', '速度', '寶塚紀念', '晴天○', '放學的樂趣', '因子一覽', '關閉', '[火紅鬥爭]', '黃金船', '中距離', '希望S', '深呼吸']
 
 # fix error by google API response
+# TODO: middleware by language 
 def fix_text(test_str):
     for i in range(len(test_str)):
         test_str[i] = re.sub("\||\[|\]|\●|\ ", "", test_str[i])
@@ -236,7 +237,6 @@ class HorseFetcher():
         col_cmd = self.gen_sql_col_cmd()
         value_cmd = self.gen_sql_value_cmd()
         sql_cmd = f"INSERT INTO HorseData ({col_cmd}) VALUES ({value_cmd})"
-        self.sqlite_instance.run_sql_cmd(sql_cmd)
         return sql_cmd
     
     def trans_search_cmd(self) -> str:
@@ -254,6 +254,10 @@ class HorseFetcher():
             return True
         return False
 
+    def save_horse_info_in_db(self):
+        if len(self.horse_info) != 0 and self.check_horse_exist() is False:
+            self.sqlite_instance.run_sql_cmd(self.trans_sql_cmd())
+
     @property
     def horse_info(self) -> Mapping:
         return self._horse_info
@@ -264,6 +268,4 @@ if __name__ == '__main__':
     horse_fetcher.trans_csv()
     key_in = sys.stdin.readline()
     if key_in == 'y\n' or key_in == "\n":
-        # search_cmd = horse_fetcher.trans_search_cmd()
-        if horse_fetcher.check_horse_exist() is False:
-            horse_fetcher.trans_sql_cmd()
+        horse_fetcher.save_horse_info_in_db()
