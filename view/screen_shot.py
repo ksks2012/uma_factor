@@ -15,7 +15,7 @@ from functools import partial
 import pyscreenshot as ImageGrab
 
 from input.fetch import HorseFetcher
-from test_code.horse_info import HorseInfoLayout
+from view.horse_info import HorseInfoLayout
 
 SOURCE_FILE_NAME = "./var/fullscreen.png"
 
