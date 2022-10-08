@@ -6,3 +6,4 @@ if __name__ == '__main__':
     print(sqlite_instance.is_table_exist("HorseData"))
     sqlite_instance.create_talbe()
     print(sqlite_instance.is_table_exist("HorseData"))
+    print(sqlite_instance.list_horse_info())

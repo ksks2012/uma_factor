@@ -66,6 +66,16 @@ class SqliteInstance():
 
         return cursor.fetchall()
 
+    def list_horse_info(self) -> List:
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("Select * FROM HorseData")
+            self.connection.commit()
+        except:
+            return []
+
+        return cursor.fetchall()
+
 
     def run_sql_cmd(self, sql_cmd: str):
         try:
