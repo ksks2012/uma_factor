@@ -15,7 +15,8 @@ rt-sandbox/**
 .rt-deps/**
 *.egg-info/**
 dist/**
-
+test_code/**
+.style.yapf
 
 .credentials/**
 *.png
