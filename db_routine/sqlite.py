@@ -37,18 +37,7 @@ class SqliteInstance():
         if self.is_table_exist("HorseData") is True:
             return
             
-        _, blue_list, red_list, green_list, factor_list = read_static_data()
-        db_field_list = []
-        db_field_list.extend(blue_list)
-        db_field_list.extend(red_list)
-        db_field_list.extend(green_list)
-        db_field_list.extend(factor_list)
-
-        sql_cmd = f"CREATE TABLE HorseData('horse_id' INTEGER PRIMARY KEY AUTOINCREMENT, 'horse_name', 'parent_one_id', 'parent_two_id', 'is_owner'"
-        count = 0
-        for field in db_field_list:
-            sql_cmd += f",'{field}'"
-        sql_cmd += ")"
+        sql_cmd = f"CREATE TABLE HorseData('horse_id' INTEGER PRIMARY KEY AUTOINCREMENT, 'horse_name', 'parent_one_id', 'parent_two_id', 'is_owner', 'blue_factor', 'red_factor', 'green_factor', 'white_factor')"
         try:
             cursor = self.connection.cursor()
             cursor.execute(sql_cmd)
