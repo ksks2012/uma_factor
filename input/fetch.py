@@ -142,12 +142,10 @@ class HorseFetcher():
                     self.factor[idx] = 1
                     print("error when white factor use star_tracker()")
 
-        # gen _horse_info
-        self._gen_horse_info()
-                
-        print(self.stars)
+        # # gen _horse_info
+        # self._gen_horse_info_in_index()
 
-    def _gen_horse_info(self):
+    def _gen_horse_info_in_text(self):
         self._horse_info["horse_name"] = self.horse_name
         self._horse_info["blue"] = {self.blue: self.stars[self.blue]}
         self._horse_info["red"] = {self.red: self.stars[self.red]}
@@ -156,6 +154,18 @@ class HorseFetcher():
         exist_white_factor = {}
         for idx in self.exist_factor_idx:
             exist_white_factor[self.factor_list[idx]] = self.stars[self.factor_list[idx]]
+
+        self._horse_info["white"] = exist_white_factor
+
+    def _gen_horse_info_in_index(self):
+        self._horse_info["horse_name"] = self.horse_name
+        self._horse_info["blue"] = {self.blue_list.index(self.blue): self.stars[self.blue]}
+        self._horse_info["red"] = {self.red_list.index(self.red): self.stars[self.red]}
+        if len(self.green) != 0: 
+            self._horse_info["green"] = {self.green_list.index(self.green): self.stars[self.green]}
+        exist_white_factor = {}
+        for idx in self.exist_factor_idx:
+            exist_white_factor[idx] = self.stars[self.factor_list[idx]]
 
         self._horse_info["white"] = exist_white_factor
 
