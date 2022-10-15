@@ -2,7 +2,7 @@ from operator import truediv
 import os
 
 import sqlite3
-from typing import List
+from typing import List, Tuple
 
 from util.common import read_static_data
 
@@ -65,6 +65,13 @@ class SqliteInstance():
 
         return cursor.fetchall()
 
+    def run_sql_cmd_arg(self, sql_cmd: str, arg: Tuple):
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute(sql_cmd, arg)
+        except Exception as e:
+            print("run_sql_cmd_arg error: %s", e)
+        self.connection.commit()
 
     def run_sql_cmd(self, sql_cmd: str):
         try:

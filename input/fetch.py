@@ -1,3 +1,4 @@
+import json
 import re
 import sys
 from typing import Mapping
@@ -142,8 +143,8 @@ class HorseFetcher():
                     self.factor[idx] = 1
                     print("error when white factor use star_tracker()")
 
-        # # gen _horse_info
-        # self._gen_horse_info_in_index()
+        # gen _horse_info
+        self._gen_horse_info_in_index()
 
     def _gen_horse_info_in_text(self):
         self._horse_info["horse_name"] = self.horse_name
@@ -163,6 +164,9 @@ class HorseFetcher():
         self._horse_info["red"] = {self.red_list.index(self.red): self.stars[self.red]}
         if len(self.green) != 0: 
             self._horse_info["green"] = {self.green_list.index(self.green): self.stars[self.green]}
+        else:
+            self._horse_info["green"] = {}
+
         exist_white_factor = {}
         for idx in self.exist_factor_idx:
             exist_white_factor[idx] = self.stars[self.factor_list[idx]]
@@ -268,6 +272,28 @@ class HorseFetcher():
         if len(self.horse_info) != 0 and self.check_horse_exist() is False:
             self.sqlite_instance.run_sql_cmd(self.trans_sql_cmd())
 
+    def gen_idx_sql_col_cmd(self):
+        return "'horse_name', 'blue_factor', 'red_factor', 'green_factor', 'white_factor'"
+
+    def gen_idx_sql_value_cmd(self):
+
+        return (self.horse_name, 
+                json.dumps(self._horse_info['blue']), 
+                json.dumps(self._horse_info['red']), 
+                json.dumps(self._horse_info['green']), 
+                json.dumps(self._horse_info['white']))
+
+    def trans_idx_sql_cmd(self):
+        # insert data from input.screen
+        col_cmd = self.gen_idx_sql_col_cmd()
+        sql_cmd = f"INSERT INTO HorseData ({col_cmd}) VALUES (?, ?, ?, ?, ?)"
+        return sql_cmd
+
+    def save_horse_info_idx_in_db(self):
+        # TODO: check_horse_exist
+        # if len(self.horse_info) != 0 and self.check_horse_exist() is False:
+        self.sqlite_instance.run_sql_cmd_arg(self.trans_idx_sql_cmd(), self.gen_idx_sql_value_cmd())
+
     @property
     def horse_info(self) -> Mapping:
         return self._horse_info
@@ -278,4 +304,5 @@ if __name__ == '__main__':
     horse_fetcher.trans_csv()
     key_in = sys.stdin.readline()
     if key_in == 'y\n' or key_in == "\n":
-        horse_fetcher.save_horse_info_in_db()
+        # horse_fetcher.save_horse_info_in_db()
+        horse_fetcher.save_horse_info_idx_in_db()
