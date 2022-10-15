@@ -65,6 +65,16 @@ class SqliteInstance():
 
         return cursor.fetchall()
 
+    def list_horse_info_with_factor(self) -> List:
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("Select horse_name, blue_factor, red_factor, green_factor, white_factor FROM HorseData")
+            self.connection.commit()
+        except:
+            return []
+
+        return cursor.fetchall()
+
     def run_sql_cmd_arg(self, sql_cmd: str, arg: Tuple):
         try:
             cursor = self.connection.cursor()
@@ -80,3 +90,18 @@ class SqliteInstance():
         except Exception as e:
             print("run_sql_cmd error: %s", e)
         self.connection.commit()
+
+    def select_field(self, table_name: str):
+        result = []
+        try:
+            cursor = self.connection.cursor()
+            cmd = f"SELECT name FROM pragma_table_info('{table_name}')"
+            cursor.execute(cmd)
+            self.connection.commit()
+        except:
+            return result
+
+        for i in cursor.fetchall():
+            result.append(i[0])
+
+        return result
