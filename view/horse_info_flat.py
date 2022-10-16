@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from ctypes.wintypes import INT
+import json
 
 from cProfile import label
 from typing import List, Mapping
@@ -12,6 +14,7 @@ import kivy
 
 import os
 from view.label_gen import LabelGen
+from util.common import read_static_data
 
 kivy.resources.resource_add_path(os.path.abspath('./font/msjh.ttc'))
 LabelBase.register('zh_font', './font/msjh.ttc')
@@ -21,9 +24,11 @@ class HorseInfoFlatLayout(GridLayout):
         self.horse_info = horse_info
         # count = len(self.horse_info) - 1 + len(self.horse_info.get("white", {}))
         super(HorseInfoFlatLayout, self).__init__(cols=5, rows=1, **kwargs)
+        self.horse_name_dict, self.blue_list, self.red_list, self.green_list, self.factor_list = read_static_data()
         self.build()
 
-    def _info_to_lable(self, info: Mapping) -> List:
+    def _info_to_label(self, info: str) -> List:
+        info = json.loads(info)
         if len(info) == 0:
             return ""
         
@@ -31,22 +36,26 @@ class HorseInfoFlatLayout(GridLayout):
         if len(info_keys) == 0:
             return ""
 
-        return info_keys[0]
+        return int(info_keys[0])
 
     def build(self):
         # TODO: background
         # TODO: stars
         self.add_widget(Label(text=self.horse_info.get("horse_name", "")))
-        self.add_widget(LabelGen(text=self._info_to_lable(self.horse_info.get("blue", {})), backgroud_color='blue'))
-        self.add_widget(LabelGen(text=self._info_to_lable(self.horse_info.get("red", {})), backgroud_color='red'))
-        if self.horse_info.get("green") is not None:
-            self.add_widget(LabelGen(text=self._info_to_lable(self.horse_info.get("green", {})), backgroud_color='green'))
+        blue_idx = self._info_to_label(self.horse_info.get("blue_factor", {}))
+        self.add_widget(LabelGen(text=self.blue_list[blue_idx], backgroud_color='blue'))
+        red_idx = self._info_to_label(self.horse_info.get("red_factor", {}))
+        self.add_widget(LabelGen(text=self.red_list[red_idx], backgroud_color='red'))
+        green_idx = self._info_to_label(self.horse_info.get("green_factor", {}))
+        if green_idx is not INT:
+            self.add_widget(LabelGen(text="-", backgroud_color='green'))
+        else:
+            self.add_widget(LabelGen(text=self.green_list[green_idx], backgroud_color='green'))
 
         # TODO: check if horse_info had missing value
-        white_factor_count = len(self.horse_info.get("white", {}).items())
+        white_factor_count = len(json.loads(self.horse_info.get("white_factor", {})).items())
         white_label = LabelGen(text=str(white_factor_count), backgroud_color='balck')
         self.add_widget(white_label)
-        print(self.horse_info)
         return self
     
     # callback function for update self widget
