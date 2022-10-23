@@ -28,7 +28,6 @@ SAVE_BT_TEXT = 'Save'
 class ShowHorsesApp(App):
     def __init__(self, horse_info_list=[], **kwargs):
         self.horse_info_list = horse_info_list
-        # count = len(self.horse_info) - 1 + len(self.horse_info.get("white", {}))
         super().__init__(**kwargs)
         self.build()
 

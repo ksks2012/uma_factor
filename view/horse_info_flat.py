@@ -29,23 +29,28 @@ class HorseInfoFlatLayout(GridLayout):
     def _info_to_label(self, info: str) -> List:
         info = json.loads(info)
         if len(info) == 0:
-            return ""
+            return None, None
         
         info_keys = list(info.keys())
+        info_value = list(info.values())
         if len(info_keys) == 0:
-            return ""
+            return None, None
 
-        return int(info_keys[0])
+        return int(info_keys[0]), int(info_value[0])
+
+    def gen_star_with_info(self, num_star):        
+        star = " "
+        for i in range(num_star):
+            star += "★"
+        return star
 
     def build(self):
-        # TODO: background
-        # TODO: stars
         self.add_widget(Label(text=self.horse_info.get("horse_name", "")))
-        blue_idx = self._info_to_label(self.horse_info.get("blue_factor", {}))
-        self.add_widget(LabelGen(text=self.blue_list[blue_idx], backgroud_color='blue'))
-        red_idx = self._info_to_label(self.horse_info.get("red_factor", {}))
-        self.add_widget(LabelGen(text=self.red_list[red_idx], backgroud_color='red'))
-        green_idx = self._info_to_label(self.horse_info.get("green_factor", {}))
+        blue_idx, stars = self._info_to_label(self.horse_info.get("blue_factor", {}))
+        self.add_widget(LabelGen(text=self.blue_list[blue_idx] + self.gen_star_with_info(stars), backgroud_color='blue'))
+        red_idx, stars = self._info_to_label(self.horse_info.get("red_factor", {}))
+        self.add_widget(LabelGen(text=self.red_list[red_idx] + self.gen_star_with_info(stars), backgroud_color='red'))
+        green_idx, stars = self._info_to_label(self.horse_info.get("green_factor", {}))
         if type(green_idx) is not int:
             self.add_widget(LabelGen(text="-", backgroud_color='green'))
         else:
