@@ -7,8 +7,8 @@ def read_yaml(file_name: str):
 
 	if yaml_file is None:
 		return dict()
-
 	return yaml_file
+
 
 def read_static_data():
     horse_name_dict = read_yaml("./etc/horse_name.yaml")

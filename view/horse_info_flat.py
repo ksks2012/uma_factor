@@ -22,7 +22,6 @@ LabelBase.register('zh_font', './font/msjh.ttc')
 class HorseInfoFlatLayout(GridLayout):
     def __init__(self, horse_info={}, **kwargs):
         self.horse_info = horse_info
-        # count = len(self.horse_info) - 1 + len(self.horse_info.get("white", {}))
         super(HorseInfoFlatLayout, self).__init__(cols=5, rows=1, **kwargs)
         self.horse_name_dict, self.blue_list, self.red_list, self.green_list, self.factor_list = read_static_data()
         self.build()
@@ -47,7 +46,7 @@ class HorseInfoFlatLayout(GridLayout):
         red_idx = self._info_to_label(self.horse_info.get("red_factor", {}))
         self.add_widget(LabelGen(text=self.red_list[red_idx], backgroud_color='red'))
         green_idx = self._info_to_label(self.horse_info.get("green_factor", {}))
-        if green_idx is not INT:
+        if type(green_idx) is not int:
             self.add_widget(LabelGen(text="-", backgroud_color='green'))
         else:
             self.add_widget(LabelGen(text=self.green_list[green_idx], backgroud_color='green'))

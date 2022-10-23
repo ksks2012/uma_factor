@@ -42,7 +42,7 @@ class ShowHorsesApp(App):
         horse_list = GridLayout(cols=1, rows=10)
 
         for horse_info in self.horse_info_list:
-            horse_info_flat_layout = HorseInfoFlatLayout(horse_info)
+            horse_info_flat_layout = HorseInfoFlatLayout(horse_info=horse_info)
             horse_list.add_widget(horse_info_flat_layout)
 
         self.root = GridLayout(cols=1)

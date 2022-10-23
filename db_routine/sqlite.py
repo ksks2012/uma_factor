@@ -65,10 +65,11 @@ class SqliteInstance():
 
         return cursor.fetchall()
 
+    # TODO: page
     def list_horse_info_with_factor(self) -> List:
         try:
             cursor = self.connection.cursor()
-            cursor.execute("Select horse_name, blue_factor, red_factor, green_factor, white_factor FROM HorseData")
+            cursor.execute("Select horse_id, horse_name, parent_one_id, parent_two_id, is_owner, blue_factor, red_factor, green_factor, white_factor FROM HorseData")
             self.connection.commit()
         except:
             return []

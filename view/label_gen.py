@@ -13,11 +13,12 @@ class RGB():
         elif color == 'red':
             self.R = 1
         elif color == 'green':
-            self.G = 1
+            self.G = 0.5
         elif color == 'blue':
             self.B = 1
 
 
+#TODO: text color of white backgroud
 class LabelGen(Label):
     def __init__(self, text, backgroud_color, **kwargs):
         super(LabelGen, self).__init__(**kwargs)
