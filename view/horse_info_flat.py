@@ -1,18 +1,15 @@
 # -*- coding: utf-8 -*-
-from ctypes.wintypes import INT
 import json
-
-from cProfile import label
-from typing import List, Mapping
-from kivy.app import App
-from kivy.uix.gridlayout  import GridLayout
-from kivy.uix.boxlayout  import BoxLayout
-from kivy.uix.widget import Widget
-from kivy.uix.label import Label
-from kivy.core.text import LabelBase
-import kivy
-
 import os
+
+from ctypes.wintypes import INT
+from typing import List, Mapping
+import kivy
+from kivy.app import App
+from kivy.core.text import LabelBase
+from kivy.uix.gridlayout  import GridLayout
+from kivy.uix.label import Label
+
 from view.label_gen import LabelGen
 from util.common import read_static_data
 
@@ -57,6 +54,7 @@ class HorseInfoFlatLayout(GridLayout):
             self.add_widget(LabelGen(text=self.green_list[green_idx], backgroud_color='green'))
 
         # TODO: check if horse_info had missing value
+        # TODO: button to all white factor
         white_factor_count = len(json.loads(self.horse_info.get("white_factor", {})).items())
         white_label = LabelGen(text=str(white_factor_count), backgroud_color='balck')
         self.add_widget(white_label)
