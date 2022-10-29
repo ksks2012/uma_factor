@@ -24,8 +24,12 @@ CONTEXT_BT_TEXT = 'Close me!'
 SAVE_BT_TEXT = 'Save'
 
 class ScreenShotApp(App):
+    def __init__(self, take_screen_shot=0, **kwargs):
+        super().__init__(**kwargs)
+        self.take_screen_shot = take_screen_shot
+
     def build(self):
-        self.take_screen_shot = 0
+        self.take_screen_shot = 1
         self.use_google_api = 1
         return self.create_screen_shot_view()
 
