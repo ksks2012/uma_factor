@@ -18,6 +18,7 @@ import pyscreenshot as ImageGrab
 from input.fetch import HorseFetcher
 from view.horse_info import HorseInfoLayout
 from view.horse_info_flat import HorseInfoFlatLayout
+from view.filter_layout import HorseInfoFilterLayout
 
 SOURCE_FILE_NAME = "./var/fullscreen.png"
 
@@ -37,7 +38,7 @@ class ShowHorsesApp(App):
         return self.create_show_horse_view()
 
     def create_show_horse_view(self):
-        filter_layout = GridLayout(cols=1, rows=10)
+        filter_layout = HorseInfoFilterLayout()
         horse_list = GridLayout(cols=1, rows=10)
 
         for horse_info in self.horse_info_list:
