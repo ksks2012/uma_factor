@@ -168,7 +168,7 @@ class HorseFetcher():
         if len(self.green) != 0: 
             self._horse_info["green_factor"] = json.dumps({self.green_list.index(self.green): self.stars[self.green]})
         else:
-            self._horse_info["green_factor"] = {}
+            self._horse_info["green_factor"] = "{}"
 
         exist_white_factor = {}
         for idx in self.exist_factor_idx:
@@ -270,6 +270,30 @@ class HorseFetcher():
             print("\nFind repeat horse!\n")
             return True
         return False
+    
+    def gen_sql_condition_cmd_with_index(self) -> str:
+        col_cmd = ""
+        col_cmd += f'"horse_name" = "{self.horse_name}"'
+        col_cmd += f' AND "blue_factor" = \'{self._horse_info["blue_factor"]}\''
+        col_cmd += f' AND "red_factor" = \'{self._horse_info["red_factor"]}\''
+        col_cmd += f' AND "green_factor" = \'{self._horse_info["green_factor"]}\''
+        col_cmd += f' AND "white_factor" = \'{self._horse_info["white_factor"]}\''
+
+        return col_cmd 
+
+    def trans_search_cmd_with_index(self) -> str:
+        condition_cmd = self.gen_sql_condition_cmd_with_index()
+        sql_cmd = f"SELECT * FROM HorseData WHERE {condition_cmd}"
+        print(sql_cmd)
+        # self.sqlite_instance.search_horse(sql_cmd)
+        return sql_cmd 
+
+    def check_horse_exist_with_index(self) -> bool:
+        print(len(self.sqlite_instance.run_sql_cmd(self.trans_search_cmd())))
+        if len(self.sqlite_instance.search_horse(self.trans_search_cmd())) != 0:
+            print("\nFind repeat horse!\n")
+            return True
+        return False
 
     def save_horse_info_in_db(self):
         if len(self.horse_info) != 0 and self.check_horse_exist() is False:
@@ -294,8 +318,8 @@ class HorseFetcher():
 
     def save_horse_info_idx_in_db(self):
         # TODO: check_horse_exist
-        # if len(self.horse_info) != 0 and self.check_horse_exist() is False:
-        self.sqlite_instance.run_sql_cmd_arg(self.trans_idx_sql_cmd(), self.gen_idx_sql_value_cmd())
+        if len(self.horse_info) != 0 and self.check_horse_exist_with_index() is False:
+            self.sqlite_instance.run_sql_cmd_arg(self.trans_idx_sql_cmd(), self.gen_idx_sql_value_cmd())
 
     @property
     def horse_info(self) -> Mapping:
@@ -306,6 +330,8 @@ if __name__ == '__main__':
     horse_fetcher.fetch_screen()
     horse_fetcher.trans_csv()
     key_in = sys.stdin.readline()
+    horse_fetcher.trans_search_cmd_with_index()
+
     if key_in == 'y\n' or key_in == "\n":
         # horse_fetcher.save_horse_info_in_db()
         horse_fetcher.save_horse_info_idx_in_db()
