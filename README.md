@@ -13,6 +13,10 @@ https://cloud.google.com/vision/docs/ocr
 
 - Put goolge API credential file in .credentials
 
+# For testing
+
+- 
+
 # TODO
 
 ## view models
@@ -25,7 +29,7 @@ https://cloud.google.com/vision/docs/ocr
 
 ##
 
-- [] page cache
+- [ ] page cache machine
 
 ## UI
 - [ ] csv storage / translate

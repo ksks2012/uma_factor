@@ -15,7 +15,6 @@ class HorseInfoLayout(GridLayout):
         self.build()
 
     def _info_to_label(self, info: str) -> List:
-        print(info)
         info = json.loads(info)
         if len(info) == 0:
             return None, None

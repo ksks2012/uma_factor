@@ -76,6 +76,16 @@ class SqliteInstance():
 
         return cursor.fetchall()
 
+    def paging_horse_info_with_factor(self, limit, offset) -> List:
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute(f"Select horse_id, horse_name, parent_one_id, parent_two_id, is_owner, blue_factor, red_factor, green_factor, white_factor FROM HorseData LIMIT {limit} OFFSET {offset}")
+            self.connection.commit()
+        except:
+            return []
+
+        return cursor.fetchall()
+
     def run_sql_cmd_arg(self, sql_cmd: str, arg: Tuple):
         try:
             cursor = self.connection.cursor()

@@ -9,3 +9,4 @@ if __name__ == '__main__':
     print(sqlite_instance.list_horse_info())
     print(sqlite_instance.list_horse_info_with_factor())
     print(sqlite_instance.select_field("HorseData"))
+    print(sqlite_instance.paging_horse_info_with_factor(10, 10))
