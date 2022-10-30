@@ -23,6 +23,7 @@ from util.data_processor import sql_data_to_horse_info
 import util.text as TEXT
 import util.path as PATH
 import util.define as DEFINE
+from view.filter_layout import HorseInfoFilterLayout
 
 SOURCE_FILE_NAME = "./var/fullscreen.png"
 
@@ -87,7 +88,7 @@ class ShowHorsesApp(App):
         self.enter_filter_bt.bind(on_press=self._press_pre_page_bt)
 
     def create_show_horse_view(self):
-        filter_layout = GridLayout(cols=1, rows=10)
+        filter_layout = HorseInfoFilterLayout()
         self.horse_list = GridLayout(cols=1, rows=10)
 
         for horse_info in self.horse_info_list:

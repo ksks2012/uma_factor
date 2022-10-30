@@ -1,3 +1,9 @@
+HORSE_FILTER_LABEL_NAME = "Horse Name"
+BLUE_FILTER_LABEL_NAME = "Blue Factor"
+RED_FILTER_LABEL_NAME = "Red Factor"
+GREEN_FILTER_LABEL_NAME = "Green Factor"
+WHITE_FILTER_LABEL_NAME = "White Factor"
+
 ANALYSIS_BT_TEXT = "Analysis"
 CONTEXT_BT_TEXT = "Close me!"
 SAVE_BT_TEXT = "Save"
