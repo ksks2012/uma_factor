@@ -75,6 +75,9 @@ class ShowHorsesApp(App):
 
 
     def _press_next_page_bt(self, arg):
+        # last page
+        if len(self.page_cache[self.page]) < DEFINE.NUM_OF_HORSE_INFO_IN_PAGE:
+            return
         self.page = self.page + 1
         self.update_horse_info_flat_layout()
 
@@ -91,9 +94,7 @@ class ShowHorsesApp(App):
         filter_layout = HorseInfoFilterLayout()
         self.horse_list = GridLayout(cols=1, rows=10)
 
-        for horse_info in self.horse_info_list:
-            horse_info_flat_layout = HorseInfoFlatLayout(horse_info=horse_info)
-            self.horse_list.add_widget(horse_info_flat_layout)
+        self.update_horse_list(0)
 
         self.pre_page_bt = Button(text=TEXT.ENTER_PRE_PAGE)
         self.next_page_bt = Button(text=TEXT.ENTER_NEXT_PAGE)
