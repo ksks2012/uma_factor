@@ -10,6 +10,7 @@ from db_routine.sqlite import SqliteInstance
 
 from input import image_processing
 from util.common import read_static_data
+import util.path as PATH
 
 SOURCE_FILE_NAME = "./var/fullscreen.png"
 
@@ -59,7 +60,7 @@ class HorseFetcher():
         self.white_factor_count = 0
 
         self.sqlite_instance = SqliteInstance()
-        self.sqlite_instance.connect("var/data.db3")
+        self.sqlite_instance.connect(PATH.DB_PATH)
 
         self.horse_name_dict, self.blue_list, self.red_list, self.green_list, self.factor_list = read_static_data()
 
