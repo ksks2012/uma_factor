@@ -15,13 +15,10 @@ from functools import partial
 import pyscreenshot as ImageGrab
 
 from input.fetch import HorseFetcher
-from view.horse_info import HorseInfoLayout
+from view.horse_info import HorseInfoDetailLayout
+import util.text as TEXT
 
 SOURCE_FILE_NAME = "./var/fullscreen.png"
-
-ANALYSIS_BT_TEXT = 'Analysis'
-CONTEXT_BT_TEXT = 'Close me!'
-SAVE_BT_TEXT = 'Save'
 
 class ScreenShotApp(App):
     def __init__(self, take_screen_shot=0, **kwargs):
@@ -45,21 +42,21 @@ class ScreenShotApp(App):
         
         box = BoxLayout(spacing=10)
 
-        analysis_bt = Button(text=ANALYSIS_BT_TEXT, size_hint=(1, .15))
+        analysis_bt = Button(text=TEXT.ANALYSIS_BT_TEXT, size_hint=(1, .15))
         analysis_bt.bind(on_press=self.press_analysis_bt)
 
-        content_bt = Button(text=CONTEXT_BT_TEXT, size_hint=(1, .15))
+        content_bt = Button(text=TEXT.CONTEXT_BT_TEXT, size_hint=(1, .15))
         # FIXME: when App is popup window
         # popup = Popup(title='Test popup', content_bt=box, size_hint=(None, None), size=(620, 1000), auto_dismiss=False)
         # content_bt.bind(on_press=popup.dismiss)        
         # popup.open()
 
-        self.save_bt = Button(text=SAVE_BT_TEXT, size_hint=(1, .15))
+        self.save_bt = Button(text=TEXT.SAVE_BT_TEXT, size_hint=(1, .15))
         self.save_bt.bind(on_press=self.press_save_bt)
         self.save_bt.disabled = True
 
         self.build_figure(box)
-        self.horse_info_layout = HorseInfoLayout()
+        self.horse_info_layout = HorseInfoDetailLayout()
 
         self.root = GridLayout(cols=2)
         self.root.add_widget(box)
@@ -78,7 +75,7 @@ class ScreenShotApp(App):
         self.save_bt.disabled = False
 
     def press_save_bt(self, arg):
-        self.horse_fetcher.save_horse_info_in_db()
+        self.horse_fetcher.save_horse_info_idx_in_db()
 
     def build_figure(self, box: GridLayout):
         try:

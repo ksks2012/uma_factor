@@ -163,10 +163,10 @@ class HorseFetcher():
 
     def _gen_horse_info_in_index(self):
         self._horse_info["horse_name"] = self.horse_name
-        self._horse_info["blue_factor"] = {self.blue_list.index(self.blue): self.stars[self.blue]}
-        self._horse_info["red_factor"] = {self.red_list.index(self.red): self.stars[self.red]}
+        self._horse_info["blue_factor"] = json.dumps({self.blue_list.index(self.blue): self.stars[self.blue]})
+        self._horse_info["red_factor"] = json.dumps({self.red_list.index(self.red): self.stars[self.red]})
         if len(self.green) != 0: 
-            self._horse_info["green_factor"] = {self.green_list.index(self.green): self.stars[self.green]}
+            self._horse_info["green_factor"] = json.dumps({self.green_list.index(self.green): self.stars[self.green]})
         else:
             self._horse_info["green_factor"] = {}
 
@@ -174,7 +174,7 @@ class HorseFetcher():
         for idx in self.exist_factor_idx:
             exist_white_factor[idx] = self.stars[self.factor_list[idx]]
 
-        self._horse_info["white_factor"] = exist_white_factor
+        self._horse_info["white_factor"] = json.dumps(exist_white_factor)
 
     def trans_csv(self, path = 'output.txt'):
         ## trans to csv row
@@ -279,12 +279,12 @@ class HorseFetcher():
         return "'horse_name', 'blue_factor', 'red_factor', 'green_factor', 'white_factor'"
 
     def gen_idx_sql_value_cmd(self):
-
+        # FIXME:
         return (self.horse_name, 
-                json.dumps(self._horse_info['blue']), 
-                json.dumps(self._horse_info['red']), 
-                json.dumps(self._horse_info['green']), 
-                json.dumps(self._horse_info['white']))
+                self._horse_info['blue_factor'], 
+                self._horse_info['red_factor'], 
+                self._horse_info['green_factor'], 
+                self._horse_info['white_factor'])
 
     def trans_idx_sql_cmd(self):
         # insert data from input.screen

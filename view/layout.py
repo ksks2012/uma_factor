@@ -6,10 +6,12 @@ from kivy.uix.gridlayout  import GridLayout
 from util.common import read_static_data
 
 class HorseInfoLayout(GridLayout):
-    def __init__(self, horse_info={}, **kwargs):
+    def __init__(self, horse_info=None, **kwargs):
         self.horse_info = horse_info
         super(HorseInfoLayout, self).__init__(**kwargs)
         self.horse_name_dict, self.blue_list, self.red_list, self.green_list, self.factor_list = read_static_data()
+        if horse_info is None:
+            return self
         self.build()
 
     def _info_to_label(self, info: str) -> List:

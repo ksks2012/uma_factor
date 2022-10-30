@@ -16,18 +16,16 @@ kivy.resources.resource_add_path(os.path.abspath('./font/msjh.ttc'))
 LabelBase.register('zh_font', './font/msjh.ttc')
 
 class HorseInfoDetailLayout(HorseInfoLayout):
-    def __init__(self, horse_info={}, **kwargs):
-    #     self.horse_info = horse_info
-    #     # count = len(self.horse_info) - 1 + len(self.horse_info.get("white", {}))
+    def __init__(self, horse_info=None, **kwargs):
         super(HorseInfoDetailLayout, self).__init__(horse_info=horse_info, cols=2, rows=20, **kwargs)
-    #     self.horse_name_dict, self.blue_list, self.red_list, self.green_list, self.factor_list = read_static_data()
-    #     self.build()
 
     def build(self):
         # TODO: background
         # TODO: stars
+        print("self.horse_info", self.horse_info)
         self.add_widget(Label(text=self.horse_info.get("horse_name", "")))
         blue_idx, stars = self._info_to_label(self.horse_info.get("blue_factor", '{}'))
+        print("blue_idx", blue_idx)
         self.add_widget(LabelGen(text=self.blue_list[blue_idx] + self.gen_star_with_info(stars), backgroud_color='blue'))
         red_idx, stars = self._info_to_label(self.horse_info.get("red_factor", '{}'))
         self.add_widget(LabelGen(text=self.red_list[red_idx] + self.gen_star_with_info(stars), backgroud_color='red'))
@@ -35,7 +33,7 @@ class HorseInfoDetailLayout(HorseInfoLayout):
         if type(green_idx) is not int:
             self.add_widget(LabelGen(text="-", backgroud_color='green'))
         else:
-            self.add_widget(LabelGen(text=self.green_list[green_idx], backgroud_color='green'))
+            self.add_widget(LabelGen(text=self.green_list[green_idx] + self.gen_star_with_info(stars), backgroud_color='green'))
         
         # TODO: check if horse_info had missing value
         for key, value in json.loads(self.horse_info.get("white_factor", '{}')).items():
