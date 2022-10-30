@@ -67,7 +67,7 @@ class HorseFetcher():
     def fetch_screen(self):
         if self.screen_shot == 1:
             # screen shot
-            image = ImageGrab.grab(bbox=(1350, 100, 1920, 800))
+            image = ImageGrab.grab(bbox=(1450, 100, 1920, 700))
 
             # save image
             image.save(SOURCE_FILE_NAME)
@@ -132,7 +132,7 @@ class HorseFetcher():
             idx = -1
             try:
                 idx = self.factor_list.index(test_str[i])
-                print(test_str[i])
+                print("test_str[i]", test_str[i])
                 self.white_factor_count += 1
             except:
                 pass
@@ -328,7 +328,7 @@ class HorseFetcher():
 if __name__ == '__main__':
     horse_fetcher = HorseFetcher(int(sys.argv[1]), int(sys.argv[2]))
     horse_fetcher.fetch_screen()
-    horse_fetcher.trans_csv()
+    # horse_fetcher.trans_csv()
     key_in = sys.stdin.readline()
     horse_fetcher.trans_search_cmd_with_index()
 

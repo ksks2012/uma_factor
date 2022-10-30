@@ -53,6 +53,9 @@ def detect_text(path):
     return result, text_allocate_list
 
 def merge_text_allocate_list(text_allocate_list: List):
+    '''
+    merge square from google API
+    '''
     merge_result_list = []
 
     idx = 0
@@ -64,9 +67,12 @@ def merge_text_allocate_list(text_allocate_list: List):
             if abs(text_allocate_list[j][0][1] - text_allocate_list[i][0][1]) < 2:
                 tmp = text_allocate_list[j][2]
             else:
+                # left top, right down
                 merge_result_list.append([text_allocate_list[i][0], tmp])
                 idx = j
                 break
+        if i == len(text_allocate_list) - 1 and idx != i:
+            merge_result_list.append([text_allocate_list[idx][0], tmp])
         
     return merge_result_list
 
