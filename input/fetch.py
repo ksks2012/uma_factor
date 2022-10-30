@@ -26,7 +26,7 @@ def fix_text(test_str):
         test_str[i] = re.sub("（", "(", test_str[i])
         test_str[i] = re.sub("）", ")", test_str[i])
         test_str[i] = re.sub("鐵巧", "靈巧", test_str[i])
-        
+
         if(len(test_str[i]) > 1 and (test_str[i][-1] != 'o' and test_str[i][-1] != 'O')):
             continue 
         test_str[i] = re.sub("o|O", "", test_str[i])
@@ -289,8 +289,8 @@ class HorseFetcher():
         return sql_cmd 
 
     def check_horse_exist_with_index(self) -> bool:
-        print(len(self.sqlite_instance.run_sql_cmd(self.trans_search_cmd())))
-        if len(self.sqlite_instance.search_horse(self.trans_search_cmd())) != 0:
+        print("check_horse_exist_with_index", len(self.sqlite_instance.search_horse(self.trans_search_cmd_with_index())))
+        if len(self.sqlite_instance.search_horse(self.trans_search_cmd_with_index())) != 0:
             print("\nFind repeat horse!\n")
             return True
         return False
@@ -318,7 +318,7 @@ class HorseFetcher():
 
     def save_horse_info_idx_in_db(self):
         # TODO: check_horse_exist
-        if len(self.horse_info) != 0 and self.check_horse_exist_with_index() is False:
+        if len(self._horse_info) != 0 and self.check_horse_exist_with_index() is False:
             self.sqlite_instance.run_sql_cmd_arg(self.trans_idx_sql_cmd(), self.gen_idx_sql_value_cmd())
 
     @property
