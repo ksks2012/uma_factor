@@ -24,6 +24,9 @@ class LabelGen(Label):
         super(LabelGen, self).__init__(**kwargs)
         if text == "":
             return
+        elif type(text) is not str:
+            text = str(text)
+            
         self.text=text
         color = RGB(backgroud_color)
         with self.canvas.before:

@@ -23,6 +23,10 @@ https://cloud.google.com/vision/docs/ocr
 - [ ] sqlite control
 - [ ] auto calculator
 
+##
+
+- [] page cache
+
 ## UI
 - [ ] csv storage / translate
 - [ ] auto calculator

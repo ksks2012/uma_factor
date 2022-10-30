@@ -20,12 +20,13 @@ TEST_STR = ['「持有因子', '速度', '寶塚紀念', '晴天○', '放學的
 def fix_text(test_str):
     for i in range(len(test_str)):
         test_str[i] = re.sub("\||\[|\]|\●|\ ", "", test_str[i])
-        test_str[i] = re.sub("◎|〇|○", "o", test_str[i])
+        test_str[i] = re.sub("◎|〇|○|Ⓗ", "o", test_str[i])
         test_str[i] = re.sub("營道|警道", "彎道", test_str[i])
         test_str[i] = re.sub("皐", "皋", test_str[i])
         test_str[i] = re.sub("（", "(", test_str[i])
         test_str[i] = re.sub("）", ")", test_str[i])
         test_str[i] = re.sub("鐵巧", "靈巧", test_str[i])
+        
         if(len(test_str[i]) > 1 and (test_str[i][-1] != 'o' and test_str[i][-1] != 'O')):
             continue 
         test_str[i] = re.sub("o|O", "", test_str[i])
@@ -96,7 +97,7 @@ class HorseFetcher():
         ## get white factor
         print("List of white factor:")
 
-        for i in range(len(test_str)):
+        for i in range(len(text_allocate_list) - 1):
             x1 = text_allocate_list[i + 1][0][0] + 60
             y1 = text_allocate_list[i + 1][0][1]
             x2 = text_allocate_list[i + 1][0][0] + 130
@@ -145,34 +146,35 @@ class HorseFetcher():
                     print("error when white factor use star_tracker()")
 
         # gen _horse_info
+        # self._gen_horse_info_in_text()
         self._gen_horse_info_in_index()
 
     def _gen_horse_info_in_text(self):
         self._horse_info["horse_name"] = self.horse_name
-        self._horse_info["blue"] = {self.blue: self.stars[self.blue]}
-        self._horse_info["red"] = {self.red: self.stars[self.red]}
+        self._horse_info["blue_factor"] = {self.blue: self.stars[self.blue]}
+        self._horse_info["red_factor"] = {self.red: self.stars[self.red]}
         if len(self.green) != 0: 
-            self._horse_info["green"] = {self.green: self.stars[self.green]}
+            self._horse_info["green_factor"] = {self.green: self.stars[self.green]}
         exist_white_factor = {}
         for idx in self.exist_factor_idx:
             exist_white_factor[self.factor_list[idx]] = self.stars[self.factor_list[idx]]
 
-        self._horse_info["white"] = exist_white_factor
+        self._horse_info["white_factor"] = exist_white_factor
 
     def _gen_horse_info_in_index(self):
         self._horse_info["horse_name"] = self.horse_name
-        self._horse_info["blue"] = {self.blue_list.index(self.blue): self.stars[self.blue]}
-        self._horse_info["red"] = {self.red_list.index(self.red): self.stars[self.red]}
+        self._horse_info["blue_factor"] = {self.blue_list.index(self.blue): self.stars[self.blue]}
+        self._horse_info["red_factor"] = {self.red_list.index(self.red): self.stars[self.red]}
         if len(self.green) != 0: 
-            self._horse_info["green"] = {self.green_list.index(self.green): self.stars[self.green]}
+            self._horse_info["green_factor"] = {self.green_list.index(self.green): self.stars[self.green]}
         else:
-            self._horse_info["green"] = {}
+            self._horse_info["green_factor"] = {}
 
         exist_white_factor = {}
         for idx in self.exist_factor_idx:
             exist_white_factor[idx] = self.stars[self.factor_list[idx]]
 
-        self._horse_info["white"] = exist_white_factor
+        self._horse_info["white_factor"] = exist_white_factor
 
     def trans_csv(self, path = 'output.txt'):
         ## trans to csv row

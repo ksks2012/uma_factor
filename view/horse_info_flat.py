@@ -2,7 +2,6 @@
 import json
 import os
 
-from ctypes.wintypes import INT
 from typing import List, Mapping
 import kivy
 from kivy.app import App
@@ -11,35 +10,16 @@ from kivy.uix.gridlayout  import GridLayout
 from kivy.uix.label import Label
 
 from view.label_gen import LabelGen
+from view.layout import HorseInfoLayout
 from util.common import read_static_data
 
 kivy.resources.resource_add_path(os.path.abspath('./font/msjh.ttc'))
 LabelBase.register('zh_font', './font/msjh.ttc')
 
-class HorseInfoFlatLayout(GridLayout):
+class HorseInfoFlatLayout(HorseInfoLayout):
     def __init__(self, horse_info={}, **kwargs):
-        self.horse_info = horse_info
-        super(HorseInfoFlatLayout, self).__init__(cols=5, rows=1, **kwargs)
-        self.horse_name_dict, self.blue_list, self.red_list, self.green_list, self.factor_list = read_static_data()
-        self.build()
+        super(HorseInfoFlatLayout, self).__init__(horse_info=horse_info, cols=5, rows=1, **kwargs)
 
-    def _info_to_label(self, info: str) -> List:
-        info = json.loads(info)
-        if len(info) == 0:
-            return None, None
-        
-        info_keys = list(info.keys())
-        info_value = list(info.values())
-        if len(info_keys) == 0:
-            return None, None
-
-        return int(info_keys[0]), int(info_value[0])
-
-    def gen_star_with_info(self, num_star):        
-        star = " "
-        for i in range(num_star):
-            star += "★"
-        return star
 
     def build(self):
         self.add_widget(Label(text=self.horse_info.get("horse_name", "")))
