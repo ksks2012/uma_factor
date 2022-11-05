@@ -11,3 +11,8 @@ SAVE_BT_TEXT = "Save"
 ENTER_PRE_PAGE = "pre"
 ENTER_NEXT_PAGE = "next"
 ENTER_FILTER_BT = "search"
+
+BT_SCREEN_SHOT = 'Screen shot'
+BT_SHOW_HORSE = 'Show horses'
+BT_CALCULATE = 'Calculate'
+TITLE_SCREENSHOT = "Screen Shot"

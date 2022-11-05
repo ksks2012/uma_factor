@@ -24,6 +24,8 @@ class ScreenShotApp(App):
     def __init__(self, take_screen_shot=0, **kwargs):
         super().__init__(**kwargs)
         self.take_screen_shot = take_screen_shot
+        self.use_google_api = 1
+        self.img = None
 
     def build(self):
         self.take_screen_shot = 1
@@ -39,33 +41,35 @@ class ScreenShotApp(App):
 
             # save image
             image.save(SOURCE_FILE_NAME)
-        
-        box = BoxLayout(spacing=10)
+
+            # reload image
+            self.img = Image(source=SOURCE_FILE_NAME)
+            self.img.reload()
 
         analysis_bt = Button(text=TEXT.ANALYSIS_BT_TEXT, size_hint=(1, .15))
         analysis_bt.bind(on_press=self.press_analysis_bt)
 
         content_bt = Button(text=TEXT.CONTEXT_BT_TEXT, size_hint=(1, .15))
-        # FIXME: when App is popup window
-        # popup = Popup(title='Test popup', content_bt=box, size_hint=(None, None), size=(620, 1000), auto_dismiss=False)
-        # content_bt.bind(on_press=popup.dismiss)        
-        # popup.open()
 
         self.save_bt = Button(text=TEXT.SAVE_BT_TEXT, size_hint=(1, .15))
         self.save_bt.bind(on_press=self.press_save_bt)
         self.save_bt.disabled = True
 
-        self.build_figure(box)
         self.horse_info_layout = HorseInfoDetailLayout()
 
-        self.root = GridLayout(cols=2)
-        self.root.add_widget(box)
-        self.root.add_widget(self.horse_info_layout)
-        self.root.add_widget(analysis_bt)
-        self.root.add_widget(content_bt)
-        self.root.add_widget(self.save_bt)
+        self.screen_shot_layout = GridLayout(cols=2)
+        self.screen_shot_layout.add_widget(self.img)
+        self.screen_shot_layout.add_widget(self.horse_info_layout)
+        self.screen_shot_layout.add_widget(analysis_bt)
+        self.screen_shot_layout.add_widget(content_bt)
+        self.screen_shot_layout.add_widget(self.save_bt)
 
-        return self.root
+        # when App is popup window
+        popup = Popup(title=TEXT.TITLE_SCREENSHOT, content=self.screen_shot_layout, auto_dismiss=False)
+        content_bt.bind(on_press=popup.dismiss)        
+        popup.open()
+
+        return self.screen_shot_layout
 
     def press_analysis_bt(self, arg):
         # TODO: charactor label 
@@ -76,16 +80,6 @@ class ScreenShotApp(App):
 
     def press_save_bt(self, arg):
         self.horse_fetcher.save_horse_info_idx_in_db()
-
-    def build_figure(self, box: GridLayout):
-        try:
-            # load the image
-            img = Image(source=SOURCE_FILE_NAME)
-            # add to the main field
-            box.add_widget(img)
-        except Exception as e:
-            Logger.exception('Pictures: Unable to load <%s>' % SOURCE_FILE_NAME)
-
 
 if __name__ == '__main__':
     import os
