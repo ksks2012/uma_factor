@@ -17,8 +17,7 @@ import pyscreenshot as ImageGrab
 from input.fetch import HorseFetcher
 from view.horse_info import HorseInfoDetailLayout
 import util.text as TEXT
-
-SOURCE_FILE_NAME = "./var/fullscreen.png"
+import util.path as PATH
 
 class ScreenShotApp(App):
     def __init__(self, take_screen_shot=0, **kwargs):
@@ -40,10 +39,10 @@ class ScreenShotApp(App):
             image = ImageGrab.grab(bbox=(1350, 100, 1920, 800))
 
             # save image
-            image.save(SOURCE_FILE_NAME)
+            image.save(PATH.SOURCE_FILE_NAME)
 
             # reload image
-            self.img = Image(source=SOURCE_FILE_NAME)
+            self.img = Image(source=PATH.SOURCE_FILE_NAME)
             self.img.reload()
 
         analysis_bt = Button(text=TEXT.ANALYSIS_BT_TEXT, size_hint=(1, .15))
