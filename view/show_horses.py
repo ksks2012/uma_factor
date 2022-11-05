@@ -25,12 +25,6 @@ import util.path as PATH
 import util.define as DEFINE
 from view.filter_layout import HorseInfoFilterLayout
 
-SOURCE_FILE_NAME = "./var/fullscreen.png"
-
-ANALYSIS_BT_TEXT = 'Analysis'
-CONTEXT_BT_TEXT = 'Close me!'
-SAVE_BT_TEXT = 'Save'
-
 class ShowHorsesApp(App):
     def __init__(self, horse_info_list=[], **kwargs):
         self.sqlite_instance = SqliteInstance()
@@ -38,14 +32,18 @@ class ShowHorsesApp(App):
         self.horse_info_list = horse_info_list
         super().__init__(**kwargs)
         self.page_cache = {}
-        self.build()
+        self.take_screen_shot = 0
+        self.use_google_api = 1
+        self.page = 1
 
     def build(self):
         self.take_screen_shot = 0
         self.use_google_api = 1
         self.page = 1
         self._cache_horse_info()
-        return self.create_show_horse_view()
+        self.create_show_horse_view()
+
+        return self.show_horses_layout
 
     def _cache_horse_info(self):
         if self.page_cache.get(self.page, None) is not None:
@@ -99,20 +97,26 @@ class ShowHorsesApp(App):
         self.pre_page_bt = Button(text=TEXT.ENTER_PRE_PAGE)
         self.next_page_bt = Button(text=TEXT.ENTER_NEXT_PAGE)
         self.enter_filter_bt = Button(text=TEXT.ENTER_FILTER_BT)
+        self.content_bt = Button(text=TEXT.CONTEXT_BT_TEXT)
+        
 
         self._bind_button()
 
-        button_layout = GridLayout(cols=3, rows=1)
+        button_layout = GridLayout(cols=4, rows=1)
         button_layout.add_widget(self.pre_page_bt)
         button_layout.add_widget(self.next_page_bt)
         button_layout.add_widget(self.enter_filter_bt)
+        button_layout.add_widget(self.content_bt)
 
-        self.root = GridLayout(cols=1)
-        self.root.add_widget(filter_layout)
-        self.root.add_widget(self.horse_list)
-        self.root.add_widget(button_layout)
-        return self.root
+        self.show_horses_layout = GridLayout(cols=1)
+        self.show_horses_layout.add_widget(filter_layout)
+        self.show_horses_layout.add_widget(self.horse_list)
+        self.show_horses_layout.add_widget(button_layout)
 
+        # when App is popup window
+        popup = Popup(title=TEXT.TITLE_SHOW_HORSES, content=self.show_horses_layout, auto_dismiss=False)
+        self.content_bt.bind(on_press=popup.dismiss)        
+        popup.open()
 
 if __name__ == '__main__':
     import os

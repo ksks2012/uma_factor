@@ -11,6 +11,7 @@ from kivy.uix.widget import Widget
 from kivy.uix.textinput import TextInput
 
 from view.screen_shot import ScreenShotApp
+from view.show_horses import ShowHorsesApp
 import util.text as TEXT
 
 
@@ -24,6 +25,7 @@ class UMA_factor(App):
 
     def on_start(self):
         self.screen_shot_view = ScreenShotApp(take_screen_shot=1)
+        self.show_horses_view = ShowHorsesApp()
         # self.screen_shot_view.build()
         return super().on_start()
 
@@ -52,6 +54,8 @@ class UMA_factor(App):
 
     def press_show_horses_bt(self, arg):
         print("press_show_horses_bt")
+        self.show_horses_view.update_horse_info_flat_layout()
+        self.show_horses_view.create_show_horse_view()
 
     def press_auto_calculate_bt(self, arg):
         print("press_auto_calculate_bt")

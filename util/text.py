@@ -4,6 +4,9 @@ RED_FILTER_LABEL_NAME = "Red Factor"
 GREEN_FILTER_LABEL_NAME = "Green Factor"
 WHITE_FILTER_LABEL_NAME = "White Factor"
 
+
+TITLE_SHOW_HORSES = "Horses"
+
 ANALYSIS_BT_TEXT = "Analysis"
 CONTEXT_BT_TEXT = "Close me!"
 SAVE_BT_TEXT = "Save"
@@ -11,6 +14,7 @@ SAVE_BT_TEXT = "Save"
 ENTER_PRE_PAGE = "pre"
 ENTER_NEXT_PAGE = "next"
 ENTER_FILTER_BT = "search"
+
 
 BT_SCREEN_SHOT = 'Screen shot'
 BT_SHOW_HORSE = 'Show horses'
