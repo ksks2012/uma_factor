@@ -4,7 +4,6 @@ from tkinter import Image
 from kivy.app import App 
 from kivy.uix.button import Button
 from kivy.uix.gridlayout  import GridLayout
-from kivy.uix.boxlayout  import BoxLayout
 from kivy.uix.popup import Popup
 from kivy.app import App
 from kivy.logger import Logger
@@ -35,11 +34,13 @@ class ShowHorsesApp(App):
         self.take_screen_shot = 0
         self.use_google_api = 1
         self.page = 1
+        self.is_popup = True
 
     def build(self):
         self.take_screen_shot = 0
         self.use_google_api = 1
         self.page = 1
+        self.is_popup = False
         self._cache_horse_info()
         self.create_show_horse_view()
 
@@ -114,9 +115,11 @@ class ShowHorsesApp(App):
         self.show_horses_layout.add_widget(button_layout)
 
         # when App is popup window
-        popup = Popup(title=TEXT.TITLE_SHOW_HORSES, content=self.show_horses_layout, auto_dismiss=False)
-        self.content_bt.bind(on_press=popup.dismiss)        
-        popup.open()
+        if self.is_popup is True:
+            print("popup")
+            popup = Popup(title=TEXT.TITLE_SHOW_HORSES, content=self.show_horses_layout, auto_dismiss=False)
+            self.content_bt.bind(on_press=popup.dismiss)        
+            popup.open()
 
 if __name__ == '__main__':
     import os
