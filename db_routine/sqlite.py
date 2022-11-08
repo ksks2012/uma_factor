@@ -91,7 +91,7 @@ class SqliteInstance():
             cursor = self.connection.cursor()
             cursor.execute(sql_cmd, arg)
         except Exception as e:
-            print("run_sql_cmd_arg error: %s", e)
+            print("run_sql_cmd_arg error: %s" % e)
         self.connection.commit()
 
     def run_sql_cmd(self, sql_cmd: str):
@@ -99,7 +99,7 @@ class SqliteInstance():
             cursor = self.connection.cursor()
             cursor.execute(sql_cmd)
         except Exception as e:
-            print("run_sql_cmd error: %s", e)
+            print("run_sql_cmd error: %s" % e)
         self.connection.commit()
 
     def select_field(self, table_name: str):
@@ -116,3 +116,12 @@ class SqliteInstance():
             result.append(i[0])
 
         return result
+
+    def set_parents(self, parent_field: str, parent_id: int, child_id: int):
+        try:
+            cursor = self.connection.cursor()
+            sql_cmd = f"UPDATE  HorseData SET '{parent_field}'='{parent_id}' WHERE horse_id = '{child_id}'"
+            cursor.execute(sql_cmd)
+        except Exception as e:
+            print("set_parents error: %s" % e)
+        self.connection.commit()
