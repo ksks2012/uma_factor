@@ -27,6 +27,8 @@ def fix_text(test_str):
         test_str[i] = re.sub("（", "(", test_str[i])
         test_str[i] = re.sub("）", ")", test_str[i])
         test_str[i] = re.sub("鐵巧", "靈巧", test_str[i])
+        test_str[i] = re.sub("ú", "u", test_str[i])
+        
 
         if(len(test_str[i]) > 1 and (test_str[i][-1] != 'o' and test_str[i][-1] != 'O')):
             continue 
@@ -104,6 +106,7 @@ class HorseFetcher():
             x2 = text_allocate_list[i + 1][0][0] + 130
             y2 = text_allocate_list[i + 1][0][1] + 30
 
+            print("horse", test_str[i])
             if len(self.horse_name) == 0 and test_str[i] in self.horse_name_dict.keys():
                 self.horse_name = f"{test_str[i]} - {self.horse_name_dict[test_str[i]]}"
                 continue
