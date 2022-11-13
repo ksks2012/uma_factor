@@ -1,3 +1,4 @@
+import copy
 import json
 from typing import List, Mapping
 from db_routine.sqlite import SqliteInstance
@@ -82,3 +83,18 @@ def total_factor(horse_info: Mapping, parent_one_info: Mapping, parent_two_info:
     total_factor = _store_factor(total_factor, parent_two_info)
 
     return total_factor
+
+def pair_factor(total_info_one: Mapping, total_info_two: Mapping) -> Mapping:
+    pair_factor = copy.deepcopy(total_info_one)
+    for key, value in total_info_two.items():
+        for factor_name, factor_values in value.items():
+            if factor_name in pair_factor.get(key):
+                pair_factor[key][factor_name]['count'] += factor_values['count']
+                pair_factor[key][factor_name]['stars'] += factor_values['stars']
+            else:
+                if pair_factor[key].get(factor_name) is None:
+                    pair_factor[key][factor_name] = {}
+                pair_factor[key][factor_name]['count'] = factor_values['count']
+                pair_factor[key][factor_name]['stars'] = factor_values['stars']
+
+    return pair_factor

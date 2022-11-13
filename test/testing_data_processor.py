@@ -1,5 +1,5 @@
 from db_routine.sqlite import SqliteInstance
-from util.data_processor import sql_data_to_horse_info, check_parents, total_factor
+from util.data_processor import sql_data_to_horse_info, check_parents, total_factor, pair_factor
 
 HORSE_INFO_IDX = [1, '低語溪流 - 超級小溪', None, None, None, '{"2": 1}', '{"5": 2}', '{}', '{"3": 1, "16": 1, "31": 2, "86": 1, "98": 2, "141": 1, "183": 1, "15": 1, "24": 3, "47": 2, "87": 3, "140": 2, "168": 2, "0": 2}']
 HORSE_INFO_IDX_RESULT = {'horse_id': 1, 'horse_name': '低語溪流 - 超級小溪', 'parent_one_id': None, 'parent_two_id': None, 'is_owner': None, 'blue_factor': '{"2": 1}', 'red_factor': '{"5": 2}', 'green_factor': '{}', 'white_factor': '{"3": 1, "16": 1, "31": 2, "86": 1, "98": 2, "141": 1, "183": 1, "15": 1, "24": 3, "47": 2, "87": 3, "140": 2, "168": 2, "0": 2}'}
@@ -39,7 +39,41 @@ def test_total_factor():
     total_result = total_factor(horse_info, parent_one_info, parent_two_info)
     print(total_result == TOTAL_FACTOR_RESULT)
 
+def test_pair_factor():
+    sqlite_instance = SqliteInstance()
+    sqlite_instance.connect("var/data.db3")
+    horse_id = 0
+    horse_info = {}
+    parent_one_info = {}
+    parent_two_info = {}
+
+    # TODO: check same horse in pair
+
+    horse_info = sqlite_instance.select_horse_by_id(horse_id)
+    horse_info = sql_data_to_horse_info(horse_info)[0]
+    parent_one_info = sqlite_instance.select_horse_by_id(horse_info['parent_one_id'])
+    parent_one_info = sql_data_to_horse_info(parent_one_info)[0]
+    parent_two_info = sqlite_instance.select_horse_by_id(horse_info['parent_two_id'])
+    parent_two_info = sql_data_to_horse_info(parent_two_info)[0]
+    total_info_one = total_factor(horse_info, parent_one_info, parent_two_info)
+
+    horse_id = 3
+    horse_info = sqlite_instance.select_horse_by_id(horse_id)
+    horse_info = sql_data_to_horse_info(horse_info)[0]
+    parent_one_info = sqlite_instance.select_horse_by_id(horse_info['parent_one_id'])
+    parent_one_info = sql_data_to_horse_info(parent_one_info)[0]
+    parent_two_info = sqlite_instance.select_horse_by_id(horse_info['parent_two_id'])
+    parent_two_info = sql_data_to_horse_info(parent_two_info)[0]
+    total_info_two = total_factor(horse_info, parent_one_info, parent_two_info)
+
+    pair_result = pair_factor(total_info_one, total_info_two)
+
+    print(total_info_one)
+    print(total_info_two)
+    print(pair_result)
+
 if __name__ == '__main__':
     # testing_sql_data_to_horse_info()
     # testing_check_parent()
-    test_total_factor()  
+    # test_total_factor()  
+    test_pair_factor()
