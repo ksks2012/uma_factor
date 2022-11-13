@@ -58,7 +58,7 @@ class SqliteInstance():
     def list_horse_info(self) -> List:
         try:
             cursor = self.connection.cursor()
-            cursor.execute("Select * FROM HorseData")
+            cursor.execute("SELECT * FROM HorseData")
             self.connection.commit()
         except:
             return []
@@ -69,7 +69,7 @@ class SqliteInstance():
     def list_horse_info_with_factor(self) -> List:
         try:
             cursor = self.connection.cursor()
-            cursor.execute("Select horse_id, horse_name, parent_one_id, parent_two_id, is_owner, blue_factor, red_factor, green_factor, white_factor FROM HorseData")
+            cursor.execute("SELECT horse_id, horse_name, parent_one_id, parent_two_id, is_owner, blue_factor, red_factor, green_factor, white_factor FROM HorseData")
             self.connection.commit()
         except:
             return []
@@ -79,7 +79,7 @@ class SqliteInstance():
     def paging_horse_info_with_factor(self, limit, offset) -> List:
         try:
             cursor = self.connection.cursor()
-            cursor.execute(f"Select horse_id, horse_name, parent_one_id, parent_two_id, is_owner, blue_factor, red_factor, green_factor, white_factor FROM HorseData LIMIT {limit} OFFSET {offset}")
+            cursor.execute(f"SELECT horse_id, horse_name, parent_one_id, parent_two_id, is_owner, blue_factor, red_factor, green_factor, white_factor FROM HorseData LIMIT {limit} OFFSET {offset}")
             self.connection.commit()
         except:
             return []
@@ -125,3 +125,7 @@ class SqliteInstance():
         except Exception as e:
             print("set_parents error: %s" % e)
         self.connection.commit()
+
+    def select_horse_by_id(self, horse_id: str) -> tuple:
+        sql_cmd = f"SELECT * FROM HorseData WHERE horse_id = {int(horse_id)}"
+        return self.search_horse(sql_cmd)
