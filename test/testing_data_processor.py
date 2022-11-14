@@ -71,6 +71,7 @@ def test_pair_factor():
     print(total_info_one)
     print(total_info_two)
     print(pair_result)
+    return pair_result
 
 if __name__ == '__main__':
     # testing_sql_data_to_horse_info()

@@ -20,8 +20,7 @@ class HorseInfoDetailLayout(HorseInfoLayout):
         super(HorseInfoDetailLayout, self).__init__(horse_info=horse_info, cols=2, rows=20, **kwargs)
 
     def build(self):
-        # TODO: background
-        # TODO: stars
+        # TODO: Refactor
         print("self.horse_info", self.horse_info)
         self.add_widget(Label(text=self.horse_info.get("horse_name", "")))
         blue_idx, stars = self._info_to_label(self.horse_info.get("blue_factor", '{}'))

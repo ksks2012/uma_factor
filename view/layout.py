@@ -1,3 +1,4 @@
+import abc
 import json
 from typing import List, Mapping
 
@@ -38,3 +39,7 @@ class HorseInfoLayout(GridLayout):
             self.horse_info = info
             self.clear_widgets()
             self.build()
+    
+    @abc.abstractmethod
+    def build(self):
+        return NotImplemented
