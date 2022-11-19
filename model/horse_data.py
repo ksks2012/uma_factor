@@ -2,7 +2,7 @@ from db_routine.sqlite import SqliteInstance
 from util.data_processor import sql_data_to_horse_info, total_factor
 import util.path as PATH
 
-class Horse_DATA():
+class HORSE_DATA():
     def __init__(self, child) -> None:
         self.sqlite_instance = SqliteInstance()
         self.sqlite_instance.connect(PATH.DB_PATH)

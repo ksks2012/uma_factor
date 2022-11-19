@@ -1,29 +1,31 @@
-import json
-
 from typing import List, Mapping
-from view.layout import HorseInfoLayout
-from view.label_gen import LabelGen
+from kivy.uix.gridlayout  import GridLayout
 
-class PairInfoLayout(HorseInfoLayout):
-    def __init__(self, horse_info=None, **kwargs):
-        super(PairInfoLayout, self).__init__(horse_info=horse_info, cols=2, rows=30, **kwargs)
+from model.horse_data import HORSE_DATA
+from view.sub_view.parent_factor_info_layout import ParentFactorInfoLayout
 
-    def _info_to_label(self):
-        pass
-
-    def _add_info(self, factor_list, info: Mapping, color: str):
-        for factor_idx, values in info.items():
-            count = values.get("count", 0)
-            stars = values.get("stars", 0)
-            label_text = f"{factor_list[int(factor_idx)]} {stars}★"
-            if color == 'black':
-                label_text += f" *{count}"
-            self.add_widget(LabelGen(text=label_text, backgroud_color=color))
+class PairInfoLayout(GridLayout):
+    def __init__(self, **kwargs):
+        super(PairInfoLayout, self).__init__(cols=2, rows=3, **kwargs)
+        self.left_parent_factor_info_layout = ParentFactorInfoLayout()
+        self.right_parent_factor_info_layout = ParentFactorInfoLayout()
 
     def build(self):
-        self._add_info(self.blue_list, self.horse_info.get("blue_factor", '{}'), 'blue')
-        self._add_info(self.red_list, self.horse_info.get("red_factor", '{}'), 'red')
-        self._add_info(self.green_list, self.horse_info.get("green_factor", '{}'), 'green')
-        self._add_info(self.factor_list, self.horse_info.get("white_factor", '{}'), 'black')
+        # TODO: Label
+        self.add_widget(self.left_parent_factor_info_layout)
+        self.add_widget(self.right_parent_factor_info_layout)
+
+        # TODO: select buttom
+        # TODO: save data
 
         return self
+
+    def update_left_parent_factor_info_layout(self, horse_data: HORSE_DATA):
+        self.left_parent_factor_info_layout.clear_widgets()
+        self.left_parent_factor_info_layout.horse_info = horse_data.total_info
+        self.left_parent_factor_info_layout.build()
+
+    def update_right_parent_factor_info_layout(self, horse_data: HORSE_DATA):
+        self.right_parent_factor_info_layout.clear_widgets()
+        self.right_parent_factor_info_layout.horse_info = horse_data.total_info
+        self.right_parent_factor_info_layout.build()
