@@ -1,5 +1,5 @@
 from db_routine.sqlite import SqliteInstance
-from util.data_processor import sql_data_to_horse_info
+from util.data_processor import sql_data_to_horse_info, total_factor
 import util.path as PATH
 
 class Horse_DATA():
@@ -22,3 +22,4 @@ class Horse_DATA():
         self.parent_one_info = sql_data_to_horse_info(parent_one_info)[0]
         parent_two_info = self.sqlite_instance.select_horse_by_id(self.parent_two_id)
         self.parent_two_info = sql_data_to_horse_info(parent_two_info)[0]
+        self.total_info = total_factor(self.child_info, self.parent_one_info, self.parent_two_info)

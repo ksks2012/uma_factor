@@ -8,6 +8,7 @@ def testing_horse_data():
     print(left_horse_data.child_info)
     print(left_horse_data.parent_one_info)
     print(left_horse_data.parent_two_info)
+    print(left_horse_data.total_info)
 
 if __name__ == '__main__':
     testing_horse_data()
