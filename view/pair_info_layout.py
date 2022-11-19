@@ -15,12 +15,15 @@ class PairInfoLayout(HorseInfoLayout):
         for factor_idx, values in info.items():
             count = values.get("count", 0)
             stars = values.get("stars", 0)
-            self.add_widget(LabelGen(text=f"{factor_list[int(factor_idx)]} {stars}★ *{count}", backgroud_color=color))
+            label_text = f"{factor_list[int(factor_idx)]} {stars}★"
+            if color == 'black':
+                label_text += f" *{count}"
+            self.add_widget(LabelGen(text=label_text, backgroud_color=color))
 
     def build(self):
         self._add_info(self.blue_list, self.horse_info.get("blue_factor", '{}'), 'blue')
         self._add_info(self.red_list, self.horse_info.get("red_factor", '{}'), 'red')
         self._add_info(self.green_list, self.horse_info.get("green_factor", '{}'), 'green')
-        self._add_info(self.factor_list, self.horse_info.get("white_factor", '{}'), 'balck')
+        self._add_info(self.factor_list, self.horse_info.get("white_factor", '{}'), 'black')
 
         return self
