@@ -95,10 +95,10 @@ class ShowHorsesApp(App):
 
         self.update_horse_list(0)
 
-        self.pre_page_bt = Button(text=TEXT.ENTER_PRE_PAGE)
-        self.next_page_bt = Button(text=TEXT.ENTER_NEXT_PAGE)
-        self.enter_filter_bt = Button(text=TEXT.ENTER_FILTER_BT)
-        self.content_bt = Button(text=TEXT.CONTEXT_BT_TEXT)
+        self.pre_page_bt = Button(text=TEXT.BT_ENTER_PRE_PAGE)
+        self.next_page_bt = Button(text=TEXT.BT_ENTER_NEXT_PAGE)
+        self.enter_filter_bt = Button(text=TEXT.BT_ENTER_FILTER)
+        self.content_bt = Button(text=TEXT.BT_CONTEXT_TEXT)
         
 
         self._bind_button()

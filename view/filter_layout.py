@@ -84,11 +84,11 @@ class HorseInfoFilterLayout(GridLayout):
     def create_filter(self) -> GridLayout:
         # label + text
         # typing and searching
-        self.horse_name_filter = FieldLayout(label_name=TEXT.HORSE_FILTER_LABEL_NAME, spin_data=self._process_horse_name())
-        self.blue_filter = FieldLayout(label_name=TEXT.BLUE_FILTER_LABEL_NAME, spin_data=self.blue_list)
-        self.red_filter = FieldLayout(label_name=TEXT.RED_FILTER_LABEL_NAME, spin_data=self.red_list)
-        self.green_filter = FieldLayout(label_name=TEXT.GREEN_FILTER_LABEL_NAME, spin_data=self.green_list)
-        self.factor_filter = FieldLayout(label_name=TEXT.WHITE_FILTER_LABEL_NAME, spin_data=self.factor_list)
+        self.horse_name_filter = FieldLayout(label_name=TEXT.LABEL_HORSE_FILTER, spin_data=self._process_horse_name())
+        self.blue_filter = FieldLayout(label_name=TEXT.LABEL_BLUE_FILTER, spin_data=self.blue_list)
+        self.red_filter = FieldLayout(label_name=TEXT.LABEL_RED_FILTER, spin_data=self.red_list)
+        self.green_filter = FieldLayout(label_name=TEXT.LABEL_GREEN_FILTER, spin_data=self.green_list)
+        self.factor_filter = FieldLayout(label_name=TEXT.LABEL_WHITE_FILTER, spin_data=self.factor_list)
 
         self.add_widget(self.horse_name_filter)
         self.add_widget(self.blue_filter)

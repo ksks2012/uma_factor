@@ -44,12 +44,12 @@ class ScreenShotApp(App):
             self.img = Image(source=PATH.SOURCE_FILE_NAME)
             self.img.reload()
 
-        analysis_bt = Button(text=TEXT.ANALYSIS_BT_TEXT, size_hint=(1, .15))
+        analysis_bt = Button(text=TEXT.BT_ANALYSIS_TEXT, size_hint=(1, .15))
         analysis_bt.bind(on_press=self.press_analysis_bt)
 
-        content_bt = Button(text=TEXT.CONTEXT_BT_TEXT, size_hint=(1, .15))
+        content_bt = Button(text=TEXT.BT_CONTEXT_TEXT, size_hint=(1, .15))
 
-        self.save_bt = Button(text=TEXT.SAVE_BT_TEXT, size_hint=(1, .15))
+        self.save_bt = Button(text=TEXT.BT_SAVE_TEXT, size_hint=(1, .15))
         self.save_bt.bind(on_press=self.press_save_bt)
         self.save_bt.disabled = True
 
