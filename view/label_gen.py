@@ -20,7 +20,7 @@ class RGB():
 
 #TODO: text color of white backgroud
 class LabelGen(Label):
-    def __init__(self, text, backgroud_color, **kwargs):
+    def __init__(self, text, backgroud_color="black", **kwargs):
         super(LabelGen, self).__init__(**kwargs)
         if text == "":
             return
