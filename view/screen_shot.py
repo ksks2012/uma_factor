@@ -17,6 +17,7 @@ from input.fetch import HorseFetcher
 from view.horse_info import HorseInfoDetailLayout
 import util.text as TEXT
 import util.path as PATH
+import util.define as DEFINE
 
 class ScreenShotApp(App):
     def __init__(self, take_screen_shot=0, **kwargs):
@@ -35,7 +36,7 @@ class ScreenShotApp(App):
 
         if self.take_screen_shot == 1:
             # screen shot
-            image = ImageGrab.grab(bbox=(1350, 100, 1920, 800))
+            image = ImageGrab.grab(bbox=(DEFINE.SCREEN_SHOT_X1, DEFINE.SCREEN_SHOT_Y1, DEFINE.SCREEN_SHOT_X2, DEFINE.SCREEN_SHOT_Y2))
 
             # save image
             image.save(PATH.SOURCE_FILE_NAME)
