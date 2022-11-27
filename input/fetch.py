@@ -11,6 +11,7 @@ from db_routine.sqlite import SqliteInstance
 from input import image_processing
 from util.common import read_static_data
 import util.path as PATH
+import util.define as DEFINE
 
 SOURCE_FILE_NAME = "./var/fullscreen.png"
 
@@ -28,6 +29,7 @@ def fix_text(test_str):
         test_str[i] = re.sub("）", ")", test_str[i])
         test_str[i] = re.sub("鐵巧", "靈巧", test_str[i])
         test_str[i] = re.sub("ú", "u", test_str[i])
+        test_str[i] = re.sub("！", "!", test_str[i])
         
 
         if(len(test_str[i]) > 1 and (test_str[i][-1] != 'o' and test_str[i][-1] != 'O')):
@@ -70,7 +72,7 @@ class HorseFetcher():
     def fetch_screen(self):
         if self.screen_shot == 1:
             # screen shot
-            image = ImageGrab.grab(bbox=(1450, 100, 1920, 700))
+            image = ImageGrab.grab(bbox=(DEFINE.SCREEN_SHOT_X1, DEFINE.SCREEN_SHOT_Y1, DEFINE.SCREEN_SHOT_X2, DEFINE.SCREEN_SHOT_Y2))
 
             # save image
             image.save(SOURCE_FILE_NAME)
