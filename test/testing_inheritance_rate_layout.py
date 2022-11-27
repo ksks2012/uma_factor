@@ -6,8 +6,8 @@ from view.pair_info_layout import PairInfoLayout
 from view.sub_view.inheritance_rate_layout import InheritanceRate
 
 def testing_inheritance_rate_layout():
-    left_horse_data = HorseData(0)
-    right_horse_data = HorseData(3)
+    left_horse_data = HorseData(34)
+    right_horse_data = HorseData(31)
 
     # create
     # pair_info_layout = PairInfoLayout()

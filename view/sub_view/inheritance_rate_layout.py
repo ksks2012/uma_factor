@@ -13,7 +13,7 @@ class InheritanceRate(GridLayout):
     def build(self):
         print(self.percentage.rate)
         for key, value in self.percentage.rate.items():
-            self.add_widget(LabelGen(text=f"{self.factor_list[int(key)]} {value * 100}%"))
+            self.add_widget(LabelGen(text=f"{self.factor_list[int(key)]} {format(value * 100, '.2f')}%"))
 
         return self
 

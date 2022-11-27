@@ -1,4 +1,4 @@
-import copy
+import operator
 from typing import Mapping
 
 from util.inheritance import get_inheritance
@@ -28,3 +28,11 @@ class Percentage():
 
         for key, value in self.rate.items():
             self.rate[key] = self.inheritance_rate.get(value, 0)
+
+        self._sort_factor_by_percentage()
+
+    def _sort_factor_by_percentage(self):
+        if len(self.rate) == 0:
+            return
+        self.rate = dict(sorted(self.rate.items(), key=operator.itemgetter(1), reverse=True))
+
