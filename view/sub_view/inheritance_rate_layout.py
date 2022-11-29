@@ -17,6 +17,8 @@ class InheritanceRate(GridLayout):
 
         return self
 
-    def update(self):
+    def update(self, percentage: Percentage, delta_time: float):
+        percentage.cal_percentage()
+        self.percentage = percentage
         self.clear_widgets()
         self.build()

@@ -4,7 +4,7 @@ from typing import Mapping
 from util.inheritance import get_inheritance
 
 class Percentage():
-    def __init__(self, left_parent_data: Mapping, right_parent_data: Mapping) -> None:
+    def __init__(self, left_parent_data = {}, right_parent_data = {}) -> None:
         self.inheritance_rate = get_inheritance()
         
         self.left_parent_data = left_parent_data

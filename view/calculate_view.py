@@ -1,7 +1,11 @@
 from kivy.app import App 
+from kivy.clock import Clock
 from kivy.uix.button import Button
 from kivy.uix.gridlayout  import GridLayout
+from functools import partial
 
+from model.percentage import Percentage
+from view.sub_view.inheritance_rate_layout import InheritanceRate
 from view.pair_info_layout import PairInfoLayout
 import util.text as TEXT
 
@@ -20,10 +24,11 @@ class CalculateView(App):
 
         content_bt = Button(text=TEXT.BT_CONTEXT_TEXT, size_hint=(1, .15))
 
+        self.inheritance_rate = InheritanceRate(Percentage())
 
         self.root = GridLayout(cols=2, rows=3)
         self.root.add_widget(self.pair_info_layout.build())
-        self.root.add_widget(GridLayout())
+        self.root.add_widget(self.inheritance_rate.build())
         self.root.add_widget(content_bt)
         self.root.add_widget(calculate_rate_bt)
         self.root.add_widget(save_bt)
@@ -32,7 +37,9 @@ class CalculateView(App):
         pass
 
     def press_calculate_rate_bt(self, arg):
-        pass
+        left_total_info = self.pair_info_layout.left_total_info
+        right_total_info = self.pair_info_layout.right_total_info
+        Clock.schedule_once(partial(self.inheritance_rate.update, Percentage(left_total_info, right_total_info)))
 
 if __name__ == '__main__':
     import os

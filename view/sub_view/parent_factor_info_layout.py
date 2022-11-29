@@ -8,6 +8,10 @@ class ParentFactorInfoLayout(HorseInfoLayout):
     def __init__(self, horse_info=None, **kwargs):
         super(ParentFactorInfoLayout, self).__init__(horse_info=horse_info, cols=2, rows=30, **kwargs)
 
+    @property
+    def info(self):
+        return self.horse_info
+
     def _add_info(self, factor_list, info: Mapping, color: str):
         for factor_idx, values in info.items():
             count = values.get("count", 0)

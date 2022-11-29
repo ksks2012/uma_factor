@@ -15,6 +15,14 @@ class PairInfoLayout(GridLayout):
         self.left_parent_factor_info_layout = ParentFactorInfoLayout()
         self.right_parent_factor_info_layout = ParentFactorInfoLayout()
 
+    @property
+    def left_total_info(self):
+        return self.left_parent_factor_info_layout.info
+
+    @property
+    def right_total_info(self):
+        return self.right_parent_factor_info_layout.info
+
     def build(self):
         # TODO: Label
         self.add_widget(self.left_parent_factor_info_layout)
@@ -33,12 +41,12 @@ class PairInfoLayout(GridLayout):
 
     def press_select_left_parent_bt(self, arg):
         # TODO: select id
-        Clock.schedule_once(partial(self.update_left_parent_factor_info_layout, HorseData(0)))
+        Clock.schedule_once(partial(self.update_left_parent_factor_info_layout, HorseData(39)))
 
 
     def press_select_right_parent_bt(self, arg):
         # TODO: select id
-        Clock.schedule_once(partial(self.update_right_parent_factor_info_layout, HorseData(3)))
+        Clock.schedule_once(partial(self.update_right_parent_factor_info_layout, HorseData(36)))
 
     def update_left_parent_factor_info_layout(self, horse_data: HorseData, delta_time: float):
         self.left_parent_factor_info_layout.clear_widgets()
