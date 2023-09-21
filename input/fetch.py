@@ -32,9 +32,9 @@ def fix_text(test_str):
         test_str[i] = re.sub("！", "!", test_str[i])
         
 
-        if(len(test_str[i]) > 1 and (test_str[i][-1] != 'o' and test_str[i][-1] != 'O')):
+        if(len(test_str[i]) > 1 and (test_str[i][-1] != 'o' and test_str[i][-1] != 'O' and test_str[i][-1] != '口')):
             continue 
-        test_str[i] = re.sub("o|O", "", test_str[i])
+        test_str[i] = re.sub("o|O|口", "", test_str[i])
         print(test_str[i])
 
 class HorseFetcher():
